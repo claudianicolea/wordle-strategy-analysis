@@ -1,6 +1,6 @@
 import random
 from strategies import letter_frequency, position_frequency, choose_best_word
-import pandas as pd
+from load_data import solution_words, allowed_words
 
 # FEEDBACK
 
@@ -66,8 +66,6 @@ def simulate_single_game(solution, allowed_words, solution_words, w1, w2):
 # RUN SIMULATIONS
 
 def run_simulations(num_games, w1, w2):
-    solution_words = pd.read_csv("solution_words.csv")['word'].tolist()
-    allowed_words = pd.read_csv("allowed_words.csv")['word'].tolist()
     total_guesses = 0
 
     for i in range(num_games):

@@ -1,4 +1,3 @@
-import pandas as pd
 from collections import Counter
 
 def letter_frequency(words):
