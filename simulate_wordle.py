@@ -5,18 +5,18 @@ import pandas as pd
 # FEEDBACK
 
 def feedback(guess, solution):
-    fb = ['B'] * 5
+    fb = ['X'] * 5
     solution_letters = list(solution)
 
-    # First pass: correct letters
+    # first pass: correct letters
     for i in range(5):
         if guess[i] == solution[i]:
             fb[i] = 'G'
             solution_letters[i] = None
 
-    # Second pass: letters in word but wrong position
+    # second pass: letters in word but wrong position
     for i in range(5):
-        if fb[i] == 'B' and guess[i] in solution_letters:
+        if fb[i] == 'X' and guess[i] in solution_letters:
             fb[i] = 'Y'
             solution_letters[solution_letters.index(guess[i])] = None
     return ''.join(fb)
@@ -36,7 +36,7 @@ def filter_words(possible_words, guess, fb):
                 if guess[i] not in word or word[i] == guess[i]:
                     match = False
                     break
-            if fb[i] == 'B' and guess[i] in word:
+            if fb[i] == 'X' and guess[i] in word:
                 match = False
                 break
         if match:
@@ -45,8 +45,9 @@ def filter_words(possible_words, guess, fb):
 
 # SIMULATE SINGLE GAME
 
-def simulate_single_game(solution, allowed_words, solution_words, w1 = 0.5, w2 = 0.5, max_guesses = 6):
+def simulate_single_game(solution, allowed_words, solution_words, w1, w2):
     possible_words = solution_words.copy()
+    max_guesses = 6
     guesses = 0
 
     while guesses < max_guesses:
@@ -55,7 +56,7 @@ def simulate_single_game(solution, allowed_words, solution_words, w1 = 0.5, w2 =
         guess = choose_best_word(allowed_words, lf, pf, w1, w2)
         guesses += 1
         fb = feedback(guess, solution)
-        if fb == 'GGGGG':
+        if fb == 'GGGGG': # solution was found
             break
         possible_words = filter_words(possible_words, guess, fb)
         if len(possible_words) == 0:
@@ -64,23 +65,23 @@ def simulate_single_game(solution, allowed_words, solution_words, w1 = 0.5, w2 =
 
 # RUN SIMULATIONS
 
-def run_simulations(num_games = 1000, w1 = 0.5, w2 = 0.5):
-    solution_words_df = pd.read_csv("solution_words.csv")['word'].tolist()
-    allowed_words_df = pd.read_csv("allowed_words.csv")['word'].tolist()
+def run_simulations(num_games, w1, w2):
+    solution_words = pd.read_csv("solution_words.csv")['word'].tolist()
+    allowed_words = pd.read_csv("allowed_words.csv")['word'].tolist()
     total_guesses = 0
 
     for i in range(num_games):
-        solution = random.choice(solution_words_df)
-        g = simulate_single_game(solution, allowed_words_df, solution_words_df, w1, w2)
+        solution = random.choice(solution_words)
+        g = simulate_single_game(solution, allowed_words, solution_words, w1, w2)
         total_guesses += g
         if i % 100 == 0:
             print(f"{i} games simulated")
     
     avg_guesses = total_guesses / num_games
-    print(f"Average guesses for w1={w1}, w2={w2}: {avg_guesses}")
+    print(f"Average guesses for w1 = {w1}, w2 = {w2}: {avg_guesses}")
     return avg_guesses
 
 # MAIN
 
 if __name__ == "__main__":
-    run_simulations(500, w1 = 0.7, w2 = 0.3)
+    run_simulations(500, 0.7, 0.3)

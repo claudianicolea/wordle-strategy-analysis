@@ -1,21 +1,21 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def dx_dt(x, k = 0.5, alpha = 1.0):
-    return -k * x**alpha
+def dy_dx(y, k, alpha):
+    return -k * y**alpha
 
-def euler_method(x0 = 1.0, k = 0.5, alpha = 1.0, dt = 0.01, steps = 100):
+def euler_method(y0, k, alpha, dx, steps):
+    y = np.zeros(steps+1)
     x = np.zeros(steps+1)
-    t = np.zeros(steps+1)
-    x[0] = x0
+    y[0] = y0
     for i in range(steps):
-        x[i+1] = x[i] + dt * dx_dt(x[i], k, alpha)
-        t[i+1] = t[i] + dt
-    return t, x
+        y[i+1] = y[i] + dx * dy_dx(y[i], k, alpha)
+        x[i+1] = x[i] + dx
+    return x, y
 
 if __name__ == "__main__":
-    t, x = euler_method(x0 = 1.0, k = 0.6, alpha = 1.2, dt = 0.01, steps = 200)
-    plt.plot(t, x)
+    x, y = euler_method(1.0, 0.6, 1.2, 0.01, 200)
+    plt.plot(x, y)
     plt.xlabel("Guess steps (continuous)")
     plt.ylabel("Fraction of solution space remaining")
     plt.title("Euler Method Approximation of Solution Space Reduction")
