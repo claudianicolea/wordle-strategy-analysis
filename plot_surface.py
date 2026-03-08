@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from simulate_wordle import run_simulations
 
-num_games = 200  # number of games per w1/w2 combination
+num_games = 10  # number of games per w1/w2 combination
 w_step = 0.1     # grid step for weights (smaller steps -> smoother but more computation)
 save_file = "simulation_results.npy"
 

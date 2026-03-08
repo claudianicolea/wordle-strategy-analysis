@@ -72,8 +72,8 @@ def run_simulations(num_games, w1, w2):
         solution = random.choice(solution_words)
         g = simulate_single_game(solution, allowed_words, solution_words, w1, w2)
         total_guesses += g
-        if i % 100 == 0:
-            print(f"{i} games simulated")
+        # if i % 100 == 0:
+            # print(f"{i} games simulated")
     
     avg_guesses = total_guesses / num_games
     print(f"Average guesses for w1 = {w1}, w2 = {w2}: {avg_guesses}")
