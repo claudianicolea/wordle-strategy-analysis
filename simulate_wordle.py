@@ -45,7 +45,7 @@ def filter_words(possible_words, guess, fb):
 
 # SIMULATE SINGLE GAME
 
-def simulate_single_game(solution, allowed_words, solution_words, w1=0.5, w2=0.5, max_guesses=6):
+def simulate_single_game(solution, allowed_words, solution_words, w1 = 0.5, w2 = 0.5, max_guesses = 6):
     possible_words = solution_words.copy()
     guesses = 0
 
@@ -64,7 +64,7 @@ def simulate_single_game(solution, allowed_words, solution_words, w1=0.5, w2=0.5
 
 # RUN SIMULATIONS
 
-def run_simulations(num_games=1000, w1=0.5, w2=0.5):
+def run_simulations(num_games = 1000, w1 = 0.5, w2 = 0.5):
     solution_words_df = pd.read_csv("solution_words.csv")['word'].tolist()
     allowed_words_df = pd.read_csv("allowed_words.csv")['word'].tolist()
     total_guesses = 0
@@ -83,4 +83,4 @@ def run_simulations(num_games=1000, w1=0.5, w2=0.5):
 # MAIN
 
 if __name__ == "__main__":
-    run_simulations(500, w1 = 0.5, w2 = 0.5)
+    run_simulations(500, w1 = 0.7, w2 = 0.3)
