@@ -11,6 +11,10 @@ def euler_method(y0, k, alpha, dx, steps):
     for i in range(steps):
         y[i+1] = y[i] + dx * dy_dx(y[i], k, alpha)
         x[i+1] = x[i] + dx
+
+        # progress print every 10% of steps
+        if i % (steps // 10) == 0:
+            print(f"Euler progress: {i}/{steps} steps ({(i / steps) * 100 : .0f}%)")
     return x, y
 
 if __name__ == "__main__":
