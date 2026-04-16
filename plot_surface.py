@@ -23,8 +23,6 @@ for i, w1 in enumerate(w1_values):
     for j, w2 in enumerate(w2_values):
         avg = run_simulations(num_games, w1, w2)
         E[j, i] = avg
-        
-        print(f"w2 = {w2:.2f} -> Avg guesses = {avg:.2f}")
     
     print("-" * 30)
 
